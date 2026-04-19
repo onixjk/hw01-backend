@@ -40,5 +40,10 @@ export const setupApp = (app: Express) => {
         res.status(HttpStatus.Ok_200).send(newVideo);
     });
 
+    app.delete("/testing/all-data", (req, res) => {
+        db.videos = [];
+        res.sendStatus(HttpStatus.NoContent_204);
+    });
+
     return app;
 };
