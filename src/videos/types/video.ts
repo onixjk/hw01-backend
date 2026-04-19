@@ -11,8 +11,8 @@ export enum AvailableResolutions {
 
 export type Video = {
     id: number;
-    title: "string";
-    author: "string";
+    title: string;
+    author: string;
     canBeDownloaded: boolean;
     minAgeRestriction: number;
     createdAt: Date;
