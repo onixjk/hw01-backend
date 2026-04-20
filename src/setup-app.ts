@@ -1,7 +1,9 @@
 import express, { Express, Request, Response } from "express";
 import {HttpStatus} from "./core/types/http-statuses";
 import {db} from "./db/in-memory.db";
-import {Video} from "./videos/types/video";
+import {AvailableResolutions, Video} from "./videos/types/video";
+import {videoInputDtoValidation} from "./videos/validation/videoInputDtoValidation";
+import {createErrorMessages} from "./core/utils/error.utils";
 
 export const setupApp = (app: Express) => {
     app.use(express.json()); // middleware для парсинга JSON в теле запроса
@@ -16,30 +18,40 @@ export const setupApp = (app: Express) => {
         res.status(HttpStatus.Ok_200).send(db.videos);
     });
 
-    app.get("/videos/:id", (req: Request<{id: string}>,
-                            res: Response<Video | null>
-    ) => {
-        // ищем видео в бд по id
-        const video = db.videos.find(v => v.id === +req.params.id);
+    app.get("/videos/:id", (req: Request, res: Response) => {
+        const id = Number(req.params.id);
+        const video = db.videos.find((v) => v.id === id);
+
         if (!video) {
-            res.sendStatus(HttpStatus.NotFound_404);
+            res
+                .status(HttpStatus.NotFound_404)
+                .send(createErrorMessages([{ field: 'id', message: 'Video not found' }])
+                );
             return;
         }
-        // возвращаем ответ
+
         res.status(HttpStatus.Ok_200).send(video);
     });
 
     app.post("/videos", (req: Request, res: Response) => {
-        //1) проверяем приходящие данные на валидность
-        //2) создаем newVideo
+        const errors = videoInputDtoValidation(req.body);
+
+        if (errors.length > 0) {
+            res.status(HttpStatus.BadRequest_400).send(createErrorMessages(errors));
+            return;
+        }
+
         const newVideo: Video = {
             id: db.videos.length ? db.videos[db.videos.length - 1].id + 1 : 1,
+            title: req.body.title,
+            author: req.body.author,
+            canBeDownloaded: false,
+            minAgeRestriction: null,
             createdAt: new Date(),
-            ...req.body
+            publicationDate: new Date(),
+            availableResolutions: req.body.availableResolutions
         };
-        //3) добавляем newVideo в БД
         db.videos.push(newVideo);
-        //4) возвращаем ответ
         res.status(HttpStatus.Created_201).send(newVideo);
     });
 
