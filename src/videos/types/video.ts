@@ -1,4 +1,4 @@
-export enum AvailableResolutions {
+export enum Resolutions {
     P144 = 'P144',
     P240 = 'P240',
     P360 = 'P360',
@@ -17,5 +17,5 @@ export type Video = {
     minAgeRestriction: number | null;
     createdAt: Date;
     publicationDate: Date;
-    availableResolutions: AvailableResolutions[];
+    availableResolutions: Resolutions[];
 };

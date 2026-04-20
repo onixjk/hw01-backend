@@ -1,7 +1,7 @@
 import express, { Express, Request, Response } from "express";
 import {HttpStatus} from "./core/types/http-statuses";
 import {db} from "./db/in-memory.db";
-import {AvailableResolutions, Video} from "./videos/types/video";
+import {Resolutions, Video} from "./videos/types/video";
 import {videoInputDtoValidation} from "./videos/validation/videoInputDtoValidation";
 import {createErrorMessages} from "./core/utils/error.utils";
 

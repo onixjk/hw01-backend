@@ -1,6 +1,6 @@
 import {ValidationError} from "../types/validationError";
 import {VideoInputDto} from "../dto/video.input-dto";
-import {AvailableResolutions} from "../types/video";
+import {Resolutions} from "../types/video";
 
 export const videoInputDtoValidation = (data: VideoInputDto): ValidationError[] => {
     const errors: ValidationError[] = [];
@@ -28,7 +28,7 @@ export const videoInputDtoValidation = (data: VideoInputDto): ValidationError[] 
             message: 'availableResolutions must be array',
         });
     } else if (data.availableResolutions.length) {
-        const existingResolution = Object.values(AvailableResolutions);
+        const existingResolution = Object.values(Resolutions);
         if (data.availableResolutions.length > existingResolution.length ||
             data.availableResolutions.length < 1
         ) {

@@ -1,4 +1,4 @@
-import {AvailableResolutions, Video} from "../videos/types/video";
+import {Resolutions, Video} from "../videos/types/video";
 
 
 export const db = {
@@ -11,7 +11,7 @@ export const db = {
             minAgeRestriction: null,
             createdAt: new Date(),
             publicationDate: new Date(),
-            availableResolutions: [AvailableResolutions.P144]
+            availableResolutions: [Resolutions.P144]
         },
         {
             id: 2,
@@ -21,7 +21,7 @@ export const db = {
             minAgeRestriction: null,
             createdAt: new Date(),
             publicationDate: new Date(),
-            availableResolutions: [AvailableResolutions.P1080]
+            availableResolutions: [Resolutions.P1080]
         },
         {
             id: 3,
@@ -31,7 +31,7 @@ export const db = {
             minAgeRestriction: null,
             createdAt: new Date(),
             publicationDate: new Date(),
-            availableResolutions: [AvailableResolutions.P1080]
+            availableResolutions: [Resolutions.P1080]
         },
     ]
 };
