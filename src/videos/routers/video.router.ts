@@ -3,8 +3,9 @@ import {Resolutions, Video} from "../types/video";
 import {HttpStatus} from "../../core/types/http-statuses";
 import {db} from "../../db/in-memory.db";
 import {createErrorMessages} from "../../core/utils/error.utils";
-import {videoInputDtoValidation} from "../validation/videoInputDtoValidation";
+import {videoInputModelValidation} from "../validation/videoInputModelValidation";
 import {testingRouter} from "../../testing/routers/testing.router";
+import {UpdateVideoInputModel} from "../model/update-video-input-model";
 
 export const videoRouter = Router({});
 
@@ -28,7 +29,7 @@ videoRouter.get("/:id", (req: Request, res: Response) => {
 });
 
 videoRouter.post("", (req: Request, res: Response) => {
-    const errors = videoInputDtoValidation(req.body);
+    const errors = videoInputModelValidation(req.body);
 
     if (errors.length > 0) {
         res.status(HttpStatus.BadRequest_400).send(createErrorMessages(errors));
@@ -49,19 +50,49 @@ videoRouter.post("", (req: Request, res: Response) => {
     res.status(HttpStatus.Created_201).send(newVideo);
 });
 
+videoRouter.put("/:id", (req: Request, res: Response) => {
+    const id = Number(req.params.id);
+    const index = db.videos.findIndex((v) => v.id === id);
+
+    if (index === -1) {
+        res
+            .status(HttpStatus.NotFound_404)
+            .send(createErrorMessages([{field: 'id', message: 'Vehicle not found'}]),
+            );
+        return;
+    }
+
+    const errors = videoInputModelValidation(req.body);
+
+    if (errors.length > 0) {
+        res.status(HttpStatus.BadRequest_400).send(createErrorMessages(errors));
+        return;
+    }
+
+    const video = {
+        title: req.body.title,
+        author: req.body.author,
+        canBeDownloaded: req.body.canBeDownloaded,
+        minAgeRestriction: req.body.minAgeRestriction,
+        createdAt: new Date(),
+        publicationDate: req.body.publicationDate,
+        availableResolutions: req.body.availableResolutions
+    };
+
+    res.sendStatus(HttpStatus.NoContent_204);
+})
+
 videoRouter.delete("/:id", (req: Request, res: Response) => {
     const id = Number(req.params.id);
-    const video = db.videos.find(v => v.id === id);
+    const index = db.videos.findIndex((v) => v.id === id);
 
-    if (!video) {
+    if (index === -1) {
         res
             .status(HttpStatus.NotFound_404)
             .send(createErrorMessages([{field: 'id', message: 'Video not found'}])
             );
         return;
     }
-
-    db.videos.splice(id - 1, 1);
-
+    db.videos.splice(index, 1);
     res.sendStatus(HttpStatus.NoContent_204);
 });

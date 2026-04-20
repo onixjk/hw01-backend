@@ -2,7 +2,7 @@ import {FieldError} from "../types/fieldError";
 import {CreateVideoInputModel} from "../model/create-video-input.model";
 import {Resolutions} from "../types/video";
 
-export const videoInputDtoValidation = (data: CreateVideoInputModel): FieldError[] => {
+export const videoInputModelValidation = (data: CreateVideoInputModel): FieldError[] => {
     const errors: FieldError[] = [];
 
     if (!data.title ||
