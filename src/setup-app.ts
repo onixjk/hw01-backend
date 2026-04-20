@@ -37,7 +37,11 @@ export const setupApp = (app: Express) => {
         //3) добавляем newVideo в БД
         db.videos.push(newVideo);
         //4) возвращаем ответ
-        res.status(HttpStatus.Ok_200).send(newVideo);
+        res.status(HttpStatus.Created_201).send(newVideo);
+    });
+
+    app.get('/testing', (req, res) => {
+        res.status(HttpStatus.Ok_200).send('testing url');
     });
 
     app.delete("/testing/all-data", (req, res) => {
