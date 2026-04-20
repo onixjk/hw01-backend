@@ -4,8 +4,6 @@ import {HttpStatus} from "../../core/types/http-statuses";
 import {db} from "../../db/in-memory.db";
 import {createErrorMessages} from "../../core/utils/error.utils";
 import {videoInputModelValidation} from "../validation/videoInputModelValidation";
-import {testingRouter} from "../../testing/routers/testing.router";
-import {UpdateVideoInputModel} from "../model/update-video-input-model";
 
 export const videoRouter = Router({});
 
