@@ -4,6 +4,7 @@ import {HttpStatus} from "../../core/types/http-statuses";
 import {db} from "../../db/in-memory.db";
 import {createErrorMessages} from "../../core/utils/error.utils";
 import {videoInputDtoValidation} from "../validation/videoInputDtoValidation";
+import {testingRouter} from "../../testing/routers/testing.router";
 
 export const videoRouter = Router({});
 
@@ -46,4 +47,21 @@ videoRouter.post("", (req: Request, res: Response) => {
     };
     db.videos.push(newVideo);
     res.status(HttpStatus.Created_201).send(newVideo);
+});
+
+videoRouter.delete("/:id", (req: Request, res: Response) => {
+    const id = Number(req.params.id);
+    const video = db.videos.find(v => v.id === id);
+
+    if (!video) {
+        res
+            .status(HttpStatus.NotFound_404)
+            .send(createErrorMessages([{field: 'id', message: 'Video not found'}])
+            );
+        return;
+    }
+
+    db.videos.splice(id - 1, 1);
+
+    res.sendStatus(HttpStatus.NoContent_204);
 });
