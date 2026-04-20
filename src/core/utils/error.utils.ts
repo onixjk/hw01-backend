@@ -1,7 +1,7 @@
-import { ValidationError } from "../../videos/types/validationError";
+import { FieldError } from "../../videos/types/fieldError";
 
 export const createErrorMessages = (
-    errors: ValidationError[]
-): { errorMessage: ValidationError[] } => {
+    errors: FieldError[]
+): { errorMessage: FieldError[] } => {
     return { errorMessage: errors };
 }
