@@ -69,15 +69,15 @@ videoRouter.put("/:id", (req: Request, res: Response) => {
         return;
     }
 
-    const video = {
-        title: req.body.title,
-        author: req.body.author,
-        canBeDownloaded: req.body.canBeDownloaded,
-        minAgeRestriction: req.body.minAgeRestriction,
-        createdAt: new Date(),
-        publicationDate: req.body.publicationDate,
-        availableResolutions: req.body.availableResolutions
-    };
+    const video = db.videos[index]
+
+    video.title = req.body.title;
+    video.author = req.body.author;
+    video.canBeDownloaded = req.body.canBeDownloaded;
+    video.minAgeRestriction = req.body.minAgeRestriction;
+    video.createdAt = new Date();
+    video.publicationDate = req.body.publicationDate;
+    video.availableResolutions = req.body.availableResolutions;
 
     res.sendStatus(HttpStatus.NoContent_204);
 })
