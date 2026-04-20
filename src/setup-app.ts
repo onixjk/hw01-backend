@@ -1,4 +1,4 @@
-import express, { Express } from "express";
+import express, { Express, Request, Response } from "express";
 import {HttpStatus} from "./core/types/http-statuses";
 import {db} from "./db/in-memory.db";
 import {Video} from "./videos/types/video";
@@ -7,26 +7,29 @@ export const setupApp = (app: Express) => {
     app.use(express.json()); // middleware для парсинга JSON в теле запроса
 
     // основной роут
-    app.get("/", (req, res) => {
+    app.get("/", (req: Request, res: Response) => {
         res.status(HttpStatus.Ok_200).send("Hello world!");
     });
 
-    app.get("/videos", (req, res) => {
+    app.get("/videos", (req: Request, res: Response) => {
         // возвращаем все видео
         res.status(HttpStatus.Ok_200).send(db.videos);
     });
 
-    app.get("/videos/:id", (req, res) => {
+    app.get("/videos/:id", (req: Request<{id: string}>,
+                            res: Response<Video | null>
+    ) => {
         // ищем видео в бд по id
         const video = db.videos.find(v => v.id === +req.params.id);
         if (!video) {
-            return res.status(HttpStatus.NotFound_404).send({ message: "Video not found" });
+            res.sendStatus(HttpStatus.NotFound_404);
+            return;
         }
         // возвращаем ответ
         res.status(HttpStatus.Ok_200).send(video);
     });
 
-    app.post("/videos", (req, res) => {
+    app.post("/videos", (req: Request, res: Response) => {
         //1) проверяем приходящие данные на валидность
         //2) создаем newVideo
         const newVideo: Video = {
@@ -40,11 +43,11 @@ export const setupApp = (app: Express) => {
         res.status(HttpStatus.Created_201).send(newVideo);
     });
 
-    app.get('/testing', (req, res) => {
+    app.get('/testing', (req: Request, res: Response) => {
         res.status(HttpStatus.Ok_200).send('testing url');
     });
 
-    app.delete("/testing/all-data", (req, res) => {
+    app.delete("/testing/all-data", (req: Request, res: Response) => {
         db.videos = [];
         res.sendStatus(HttpStatus.NoContent_204);
     });
