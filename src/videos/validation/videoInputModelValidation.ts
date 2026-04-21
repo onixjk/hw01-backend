@@ -46,7 +46,6 @@ export const videoInputModelValidation = (data: Video): FieldError[] => {
                 errors.push({
                     message: 'Invalid vehicleResolution:' + resolution,
                     field: 'resolution',
-                    
                 });
                 break;
             }
