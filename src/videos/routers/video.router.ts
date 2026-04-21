@@ -10,7 +10,6 @@ export const videoRouter = Router({});
 videoRouter.get("", (req: Request, res: Response) => {
     res.status(HttpStatus.Ok_200).send(db.videos);
 });
-
 videoRouter.get("/:id", (req: Request, res: Response) => {
     const id = Number(req.params.id);
     const video = db.videos.find((v) => v.id === id);
@@ -25,7 +24,6 @@ videoRouter.get("/:id", (req: Request, res: Response) => {
 
     res.status(HttpStatus.Ok_200).send(video);
 });
-
 videoRouter.post("", (req: Request, res: Response) => {
     const errors = videoInputModelValidation(req.body);
 
@@ -34,20 +32,22 @@ videoRouter.post("", (req: Request, res: Response) => {
         return;
     }
 
+    const publicationDate = new Date();
+    publicationDate.setDate(publicationDate.getDate() + 1);
+
     const newVideo: Video = {
         id: db.videos.length ? db.videos[db.videos.length - 1].id + 1 : 1,
         title: req.body.title,
         author: req.body.author,
         canBeDownloaded: req.body.canBeDownloaded,
         minAgeRestriction: req.body.minAgeRestriction,
-        createdAt: new Date(),
-        publicationDate: req.body.publicationDate,
+        createdAt: new Date().toISOString(),
+        publicationDate: publicationDate.toISOString(),
         availableResolutions: req.body.availableResolutions
     };
     db.videos.push(newVideo);
     res.status(HttpStatus.Created_201).send(newVideo);
 });
-
 videoRouter.put("/:id", (req: Request, res: Response) => {
     const id = Number(req.params.id);
     const index = db.videos.findIndex((v) => v.id === id);
@@ -68,18 +68,20 @@ videoRouter.put("/:id", (req: Request, res: Response) => {
     }
 
     const video = db.videos[index]
+    const publicationDate = new Date();
+
+    publicationDate.setDate(publicationDate.getDate() + 1);
 
     video.title = req.body.title;
     video.author = req.body.author;
     video.canBeDownloaded = req.body.canBeDownloaded;
     video.minAgeRestriction = req.body.minAgeRestriction;
-    video.createdAt = new Date();
-    video.publicationDate = req.body.publicationDate;
+    video.createdAt = new Date().toISOString();
+    video.publicationDate = publicationDate.toISOString();
     video.availableResolutions = req.body.availableResolutions;
 
     res.sendStatus(HttpStatus.NoContent_204);
 })
-
 videoRouter.delete("/:id", (req: Request, res: Response) => {
     const id = Number(req.params.id);
     const index = db.videos.findIndex((v) => v.id === id);
