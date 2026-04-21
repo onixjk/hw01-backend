@@ -1,8 +1,8 @@
 import {FieldError} from "../../core/error/types/fieldError";
 import {CreateVideoInputModel} from "../model/create-video-input.model";
-import {Resolutions} from "../types/video";
+import {Resolutions, Video} from "../types/video";
 
-export const videoInputModelValidation = (data: CreateVideoInputModel): FieldError[] => {
+export const videoInputModelValidation = (data: Video): FieldError[] => {
     const errors: FieldError[] = [];
 
     if (!data.title ||
@@ -20,6 +20,13 @@ export const videoInputModelValidation = (data: CreateVideoInputModel): FieldErr
     ) {
         errors.push({ field: 'author', message: 'Invalid author' });
     }
+
+    if (typeof data.canBeDownloaded !== 'boolean'
+    ) {
+        errors.push({ field: 'canBeDownloaded', message: 'Invalid canBeDownloaded' });
+    }
+
+
 
 
     if (!Array.isArray(data.availableResolutions)) {
