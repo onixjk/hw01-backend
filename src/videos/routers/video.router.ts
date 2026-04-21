@@ -55,7 +55,7 @@ videoRouter.put("/:id", (req: Request, res: Response) => {
     if (index === -1) {
         res
             .status(HttpStatus.NotFound_404)
-            .send(createErrorMessages([{field: 'id', message: 'Vehicle not found'}]),
+            .send(createErrorMessages([{field: 'id', message: 'Video not found'}]),
             );
         return;
     }
