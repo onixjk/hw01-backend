@@ -3,7 +3,7 @@ import {Resolutions, Video} from "../types/video";
 import {HttpStatus} from "../../core/types/http-statuses";
 import {db} from "../../db/in-memory.db";
 import {createErrorMessages} from "../../core/error/error.utils";
-import {videoInputModelValidation} from "../validation/videoInputModelValidation";
+import {videoInputModelValidation, videoUpdateModelValidation} from "../validation/videoInputModelValidation";
 
 export const videoRouter = Router({});
 
@@ -60,7 +60,7 @@ videoRouter.put("/:id", (req: Request, res: Response) => {
         return;
     }
 
-    const errors = videoInputModelValidation(req.body);
+    const errors = videoUpdateModelValidation(req.body);
 
     if (errors.length > 0) {
         res.status(HttpStatus.BadRequest_400).send(createErrorMessages(errors));
@@ -74,7 +74,7 @@ videoRouter.put("/:id", (req: Request, res: Response) => {
 
     video.title = req.body.title;
     video.author = req.body.author;
-    video.canBeDownloaded = false;
+    video.canBeDownloaded = req.body.canBeDownloaded;
     video.minAgeRestriction = req.body.minAgeRestriction;
     video.createdAt = new Date().toISOString();
     video.publicationDate = publicationDate.toISOString();
