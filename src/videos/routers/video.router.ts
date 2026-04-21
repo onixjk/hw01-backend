@@ -2,7 +2,7 @@ import {Request, Response, Router} from 'express';
 import {Resolutions, Video} from "../types/video";
 import {HttpStatus} from "../../core/types/http-statuses";
 import {db} from "../../db/in-memory.db";
-import {createErrorMessages} from "../../core/utils/error.utils";
+import {createErrorMessages} from "../../core/error/error.utils";
 import {videoInputModelValidation} from "../validation/videoInputModelValidation";
 
 export const videoRouter = Router({});

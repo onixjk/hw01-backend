@@ -1,4 +1,4 @@
-import {FieldError} from "../types/fieldError";
+import {FieldError} from "../../core/error/types/fieldError";
 import {CreateVideoInputModel} from "../model/create-video-input.model";
 import {Resolutions} from "../types/video";
 
