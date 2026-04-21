@@ -20,7 +20,7 @@ export const db = {
             canBeDownloaded: false,
             minAgeRestriction: null,
             createdAt: new Date().toISOString(),
-            publicationDate: new Date(),
+            publicationDate: new Date().toISOString(),
             availableResolutions: [Resolutions.P1080]
         },
         {
