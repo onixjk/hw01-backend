@@ -112,7 +112,7 @@ export const videoUpdateModelValidation = (data: UpdateVideoInputModel): FieldEr
     if (!data.publicationDate ||
         typeof data.author !== 'string'
     ) {
-        errors.push({ message: 'Invalid minAgeRestriction', field: 'minAgeRestriction' });
+        errors.push({ message: 'Invalid publicationDate', field: 'publicationDate' });
     }
 
     return errors;

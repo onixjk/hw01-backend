@@ -74,7 +74,7 @@ videoRouter.put("/:id", (req: Request, res: Response) => {
 
     video.title = req.body.title;
     video.author = req.body.author;
-    video.canBeDownloaded = req.body.canBeDownloaded;
+    video.canBeDownloaded = req.body.canBeDownloaded ?? false;
     video.minAgeRestriction = req.body.minAgeRestriction;
     video.createdAt = new Date().toISOString();
     video.publicationDate = publicationDate.toISOString();
