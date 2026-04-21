@@ -32,8 +32,8 @@ videoRouter.post("", (req: Request, res: Response) => {
         return;
     }
 
-    const publicationDate = new Date();
-    publicationDate.setDate(publicationDate.getDate() + 1);
+    const createdAt = new Date()
+    const publicationDate = new Date(createdAt.getTime() + 24 * 60 * 60 * 1000)
 
     const newVideo: Video = {
         id: db.videos.length ? db.videos[db.videos.length - 1].id + 1 : 1,
@@ -41,7 +41,7 @@ videoRouter.post("", (req: Request, res: Response) => {
         author: req.body.author,
         canBeDownloaded: false,
         minAgeRestriction: null,
-        createdAt: new Date().toISOString(),
+        createdAt: createdAt.toISOString(),
         publicationDate: publicationDate.toISOString(),
         availableResolutions: req.body.availableResolutions
     };
@@ -68,16 +68,13 @@ videoRouter.put("/:id", (req: Request, res: Response) => {
 
     const video = db.videos[index]
     const createdAt = new Date()
-    const publicationDate = new Date();
-
-    publicationDate.setDate(publicationDate.getDate() + 1);
+    const publicationDate = createdAt.setDate(createdAt.getDate() + 1);
 
     video.title = req.body.title;
     video.author = req.body.author;
     video.canBeDownloaded = req.body.canBeDownloaded ?? false;
     video.minAgeRestriction = req.body.minAgeRestriction;
-    video.createdAt = createdAt.toISOString();
-    video.publicationDate = req.body.publicationDate ?? publicationDate.toISOString();
+    video.publicationDate = req.body.publicationDate ?? publicationDate;
     video.availableResolutions = req.body.availableResolutions;
 
     res.sendStatus(HttpStatus.NoContent_204);
