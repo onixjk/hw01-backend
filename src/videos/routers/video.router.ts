@@ -67,6 +67,7 @@ videoRouter.put("/:id", (req: Request, res: Response) => {
     }
 
     const video = db.videos[index]
+    const createdAt = new Date()
     const publicationDate = new Date();
 
     publicationDate.setDate(publicationDate.getDate() + 1);
@@ -75,7 +76,7 @@ videoRouter.put("/:id", (req: Request, res: Response) => {
     video.author = req.body.author;
     video.canBeDownloaded = req.body.canBeDownloaded ?? false;
     video.minAgeRestriction = req.body.minAgeRestriction;
-    video.createdAt = new Date().toISOString();
+    video.createdAt = createdAt.toISOString();
     video.publicationDate = req.body.publicationDate ?? publicationDate.toISOString();
     video.availableResolutions = req.body.availableResolutions;
 
