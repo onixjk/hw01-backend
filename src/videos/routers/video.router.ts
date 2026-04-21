@@ -76,7 +76,7 @@ videoRouter.put("/:id", (req: Request, res: Response) => {
     video.canBeDownloaded = req.body.canBeDownloaded ?? false;
     video.minAgeRestriction = req.body.minAgeRestriction;
     video.createdAt = new Date().toISOString();
-    video.publicationDate = publicationDate.toISOString();
+    video.publicationDate = req.body.publicationDate ?? publicationDate.toISOString();
     video.availableResolutions = req.body.availableResolutions;
 
     res.sendStatus(HttpStatus.NoContent_204);
