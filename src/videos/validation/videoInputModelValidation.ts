@@ -21,13 +21,10 @@ export const videoInputModelValidation = (data: Video): FieldError[] => {
         errors.push({ message: 'Invalid author', field: 'author' });
     }
 
-    if (typeof data.canBeDownloaded !== 'boolean'
-    ) {
-        errors.push({ message: 'Invalid canBeDownloaded', field: 'canBeDownloaded' });
-    }
-
-
-
+    // if (typeof data.canBeDownloaded !== 'boolean'
+    // ) {
+    //     errors.push({ message: 'Invalid canBeDownloaded', field: 'canBeDownloaded' });
+    // }
 
     if (!Array.isArray(data.availableResolutions)) {
         errors.push({
