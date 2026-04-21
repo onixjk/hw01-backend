@@ -7,10 +7,10 @@ export const db = {
             id: 1,
             title: 'BackEnd1',
             author: 'Dimych',
-            canBeDownloaded: true,
+            canBeDownloaded: false,
             minAgeRestriction: null,
-            createdAt: new Date(),
-            publicationDate: new Date(),
+            createdAt: new Date().toISOString(),
+            publicationDate: new Date().toISOString(),
             availableResolutions: [Resolutions.P144]
         },
         {
@@ -19,7 +19,7 @@ export const db = {
             author: 'Dimych',
             canBeDownloaded: false,
             minAgeRestriction: null,
-            createdAt: new Date(),
+            createdAt: new Date().toISOString(),
             publicationDate: new Date(),
             availableResolutions: [Resolutions.P1080]
         },
@@ -29,8 +29,8 @@ export const db = {
             author: 'Dimych',
             canBeDownloaded: false,
             minAgeRestriction: null,
-            createdAt: new Date(),
-            publicationDate: new Date(),
+            createdAt: new Date().toISOString(),
+            publicationDate: new Date().toISOString(),
             availableResolutions: [Resolutions.P1080]
         },
     ]
