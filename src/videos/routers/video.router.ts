@@ -39,8 +39,8 @@ videoRouter.post("", (req: Request, res: Response) => {
         id: db.videos.length ? db.videos[db.videos.length - 1].id + 1 : 1,
         title: req.body.title,
         author: req.body.author,
-        canBeDownloaded: req.body.canBeDownloaded,
-        minAgeRestriction: req.body.minAgeRestriction,
+        canBeDownloaded: req.body.canBeDownloaded ?? false,
+        minAgeRestriction: req.body.minAgeRestriction ?? null,
         createdAt: new Date().toISOString(),
         publicationDate: publicationDate.toISOString(),
         availableResolutions: req.body.availableResolutions
