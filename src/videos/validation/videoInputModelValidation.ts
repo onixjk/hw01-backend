@@ -28,8 +28,8 @@ export const videoInputModelValidation = (data: Video): FieldError[] => {
 
     if (!Array.isArray(data.availableResolutions)) {
         errors.push({
-            field: 'availableResolutions',
             message: 'availableResolutions must be array',
+            field: 'availableResolutions'
         });
     } else if (data.availableResolutions.length) {
         const existingResolution = Object.values(Resolutions);
