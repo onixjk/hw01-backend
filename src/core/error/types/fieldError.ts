@@ -1,4 +1,4 @@
 export type FieldError = {
-    field: string;
     message: string;
+    field: string;
 };
