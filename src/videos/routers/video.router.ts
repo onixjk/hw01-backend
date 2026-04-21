@@ -49,6 +49,7 @@ videoRouter.post("", (req: Request, res: Response) => {
     res.status(HttpStatus.Created_201).send(newVideo);
 });
 videoRouter.put("/:id", (req: Request, res: Response) => {
+    const errors = videoUpdateModelValidation(req.body);
     const id = Number(req.params.id);
     const index = db.videos.findIndex((v) => v.id === id);
 
@@ -59,8 +60,6 @@ videoRouter.put("/:id", (req: Request, res: Response) => {
             );
         return;
     }
-
-    const errors = videoUpdateModelValidation(req.body);
 
     if (errors.length > 0) {
         res.status(HttpStatus.BadRequest_400).send(createErrorMessages(errors));

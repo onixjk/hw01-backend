@@ -96,7 +96,7 @@ export const videoUpdateModelValidation = (data: UpdateVideoInputModel): FieldEr
         }
     }
 
-    if (typeof data.canBeDownloaded !== 'string'
+    if (typeof data.canBeDownloaded !== 'boolean'
     ) {
         errors.push({ message: 'Invalid canBeDownloaded', field: 'canBeDownloaded' });
     }
