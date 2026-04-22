@@ -1,5 +1,5 @@
 import express, {Express, Request, Response} from "express";
-import {videoRouter} from "./videos/routers/video.router";
+import {videosRouter} from "./videos/routers/videosRouter";
 import {testingRouter} from "./testing/routers/testing.router";
 import {HttpStatus} from "./core/types/http-statuses";
 
@@ -11,7 +11,7 @@ export const setupApp = (app: Express) => {
         res.status(HttpStatus.Ok_200).send("Hello world!");
     });
 
-    app.use('/videos', videoRouter);
+    app.use('/videos', videosRouter);
     app.use('/testing', testingRouter);
 
     return app;
